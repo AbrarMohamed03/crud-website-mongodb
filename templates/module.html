@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% include "header.html" %}
+{% block header %} 
+<link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+{% endblock %}
+{% block title %} Flask Crud MySQL {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Manage <b>Modules</b> <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#mymodal">Add New Module</button></h2>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ message }}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <table class="table table-hover table-dark ">
+                    <tr>
+                        <th>CodeModule</th>
+                        <th>Intitule</th>
+                        <th>MasseHoraire</th>
+                        <th>Ation</th>
+                    </tr>
+
+                    {% for row in Modules %}    
+                    <tr>
+                        <td>{{ row.CodeModule }}</td>
+                        <td>{{ row.Intitule }}</td>
+                        <td>{{ row.MasseHoraire }}</td>
+                        <td>
+                            <a href="/update/{{ row.CodeModule }}" class="btn btn-warning btn-xs" data-bs-target="#modaledit{{ row.CodeModule }}" data-bs-toggle="modal">Edit</a>
+                            <a href="/delete/{{ row.CodeModule }}" class="btn btn-danger btn-xs delete-btn" onclick="return confirm('are you sure to delete')">Delete</a>
+                        </td>
+                    </tr>
+
+                    
+{# ------------------------------------------  Edit Modules -------------------------------------- #}
+                    <div id="modaledit{{ row.CodeModule }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center" > Add Classe</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('update') }}" method="post">
+
+                                        <div class="mb-3">
+                                        <label for="exampleInputclass" class="form-label"> <b>Code Classe</b> <small>(uneditable) </small>:</label>
+                                        <input type="text" class="form-control" for="exampleInputclass" name="CodeModule" value="{{ row.CodeModule }}" readonly>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                        <label for="exampleInputclass" class="form-label"> <b>Intitule</b> :</label>
+                                        <input type="text" class="form-control" for="exampleInputclass" name="Intitule" value="{{ row.Intitule }}">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                        <label for="exampleInputclass" class="form-label"> <b>MasseHoraire</b> :</label>
+                                        <input type="text" class="form-control" for="exampleInputclass" name="MasseHoraire" value="{{ row.MasseHoraire }}">
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary">Update</button>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                </table>
+{# ------------------------------------------  Add Modules -------------------------------------- #}
+                <div id="mymodal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" > Add Modules</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ url_for('insert') }}" method="post">
+
+                                    <div class="mb-3">
+                                      <label for="exampleInputclass" class="form-label"> <b>Code Classe</b> :</label>
+                                      <input type="text" class="form-control" for="exampleInputclass" name="CodeModule">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                      <label for="exampleInputclass" class="form-label"> <b>Intitule</b> :</label>
+                                      <input type="text" class="form-control" for="exampleInputclass" name="Intitule">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                      <label for="exampleInputclass" class="form-label"> <b>MasseHoraire</b> :</label>
+                                      <input type="text" class="form-control" for="exampleInputclass" name="MasseHoraire">
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                                  </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% include "header.html" %}
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+{% endblock %}
+{% block title %} Flask Crud MySQL {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>Manage <b>Classes</b> <button type="button" class="btn btn-success float-end" data-bs-toggle="modal"
+                        data-bs-target="#mymodal">Add New Classe</button></h2>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <table class="table table-hover table-dark ">
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Class Name</th>
+                        <th>Class Capasity</th>
+                        <th>Ation</th>
+                    </tr>
+
+                    {% for row in classes %}
+                    <tr>
+                        <td>{{ row.code_classe }}</td>
+                        <td>{{ row.Nom_classe }}</td>
+                        <td>{{ row.Effectif }}</td>
+                        <td>
+                            <a href="/updateClasse/{{ row.code_classe }}" class="btn btn-warning btn-xs"
+                                data-bs-target="#modaledit{{ row.code_classe }}" data-bs-toggle="modal">Edit</a>
+                            <a href="/deleteClasse/{{ row.code_classe }}" class="btn btn-danger btn-xs deleteClasse-btn"
+                                onclick="return confirm('are you sure to deleteClasse')">deleteClasse</a>
+                        </td>
+                    </tr>
+
+
+                    {# ------------------------------------------  Edit Classes -------------------------------------- #}
+                    <div id="modaledit{{ row.code_classe }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-center"> Add Classe</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('updateClasse') }}" method="post">
+
+                                        <div class="mb-3">
+                                            <label for="exampleInputNom_classe1" class="form-label"> <b>Code Classe</b>
+                                                <small>(uneditable) </small>:</label>
+                                            <input type="text" class="form-control" class="exampleInputNom_classe1"
+                                                name="code_classe" value="{{ row.code_classe }}" readonly>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="exampleInputNom_classe1" class="form-label"> <b>Nom_classe</b>
+                                                :</label>
+                                            <input type="text" class="form-control" class="exampleInputNom_classe1"
+                                                name="Nom_classe" value="{{ row.Nom_classe }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="exampleInputNom_classe1" class="form-label"> <b>Effectif</b>
+                                                :</label>
+                                            <input type="text" class="form-control" class="exampleInputNom_classe1"
+                                                name="Effectif" value="{{ row.Effectif }}">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">updateClasse</button>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </table>
+                {# ------------------------------------------  Add Classes -------------------------------------- #}
+                <div id="mymodal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"> Add Classes</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ url_for('insertClasse') }}" method="post">
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputNom_classe1" class="form-label"> <b>Code Classe</b>
+                                            :</label>
+                                        <input type="text" class="form-control" class="exampleInputNom_classe1"
+                                            name="code_classe">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputNom_classe1" class="form-label"> <b>Nom_classe</b>
+                                            :</label>
+                                        <input type="text" class="form-control" class="exampleInputNom_classe1"
+                                            name="Nom_classe">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputNom_classe1" class="form-label"> <b>Effectif</b>
+                                            :</label>
+                                        <input type="text" class="form-control" class="exampleInputNom_classe1"
+                                            name="Effectif">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

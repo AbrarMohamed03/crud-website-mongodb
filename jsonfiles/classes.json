@@ -1,0 +1,30 @@
+[
+  {
+    "code_classe": "10",
+    "Nom_classe": "DWFS202",
+    "Effectif": "25"
+  },
+  {
+
+    "code_classe": "20",
+    "Nom_classe": "DWFS201",
+    "Effectif": "25"
+  },
+  {
+
+    "code_classe": "30",
+    "Nom_classe": "DWFS101",
+    "Effectif": "25"
+  },
+  {
+
+    "code_classe": "15",
+    "Nom_classe": "DWFS204",
+    "Effectif": "24"
+  },
+  {
+    "code_classe": "80",
+    "Nom_classe": "DWFS203",
+    "Effectif": "23"
+  }
+]
