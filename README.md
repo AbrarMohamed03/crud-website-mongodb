@@ -22,7 +22,7 @@ What things you need to install the software and how to install them:
 Clone this repository to your local machine
 
 ```bash
-  gh repo clone DexTer-9/crud-website-mongodb
+  git clone https://github.com/DexTer-9/crud-website-mongodb.git
 ```
 
 
